@@ -1,0 +1,67 @@
+[
+  {
+    "id": "tr1",
+    "creatorId": "alice",
+    "traderId": "u_001",
+    "symbol": "BTCUSDT",
+    "side": "long",
+    "sizeUSD": 1500,
+    "entryPrice": 47000,
+    "exitPrice": 48500,
+    "pnlUSD": 48,
+    "openedAt": "2024-01-10T09:20:00.000Z",
+    "closedAt": "2024-01-10T11:00:00.000Z"
+  },
+  {
+    "id": "tr2",
+    "creatorId": "bob",
+    "traderId": "u_002",
+    "symbol": "ETHUSDT",
+    "side": "long",
+    "sizeUSD": 800,
+    "entryPrice": 1980,
+    "exitPrice": 2045,
+    "pnlUSD": 26,
+    "openedAt": "2024-01-10T10:10:00.000Z",
+    "closedAt": "2024-01-10T12:30:00.000Z"
+  },
+  {
+    "id": "tr3",
+    "creatorId": "carol",
+    "traderId": "u_003",
+    "symbol": "BTCUSDT",
+    "side": "short",
+    "sizeUSD": 2000,
+    "entryPrice": 47500,
+    "exitPrice": 46800,
+    "pnlUSD": 70,
+    "openedAt": "2024-01-10T11:25:00.000Z",
+    "closedAt": "2024-01-10T13:00:00.000Z"
+  },
+  {
+    "id": "tr4",
+    "creatorId": "alice",
+    "traderId": "u_004",
+    "symbol": "BTCUSDT",
+    "side": "long",
+    "sizeUSD": 500,
+    "entryPrice": 48000,
+    "exitPrice": 47600,
+    "pnlUSD": -16,
+    "openedAt": "2024-01-10T12:10:00.000Z",
+    "closedAt": "2024-01-10T12:50:00.000Z"
+  },
+  {
+    "id": "tr5",
+    "creatorId": "bob",
+    "traderId": "u_005",
+    "symbol": "ETHUSDT",
+    "side": "short",
+    "sizeUSD": 1200,
+    "entryPrice": 2050,
+    "exitPrice": 2075,
+    "pnlUSD": -18,
+    "openedAt": "2024-01-10T12:40:00.000Z",
+    "closedAt": "2024-01-10T13:20:00.000Z"
+  }
+]

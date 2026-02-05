@@ -1,0 +1,62 @@
+[
+  {
+    "id": "t1",
+    "creatorId": "alice",
+    "creatorName": "Alice",
+    "handle": "@alice_cn",
+    "content": "刚把一个小仓位丢进 BTC，感觉这波情绪还没到顶 lol 🚀",
+    "language": "zh-en-mix",
+    "createdAt": "2024-01-10T09:15:00.000Z",
+    "likes": 42,
+    "retweets": 18,
+    "replies": 6
+  },
+  {
+    "id": "t2",
+    "creatorId": "bob",
+    "creatorName": "Bob",
+    "handle": "@bob_trader",
+    "content": "ETH 每次跌破 2000 都是 long the dip 的机会, not financial advice 😅",
+    "language": "zh-en-mix",
+    "createdAt": "2024-01-10T10:05:00.000Z",
+    "likes": 30,
+    "retweets": 11,
+    "replies": 4
+  },
+  {
+    "id": "t3",
+    "creatorId": "carol",
+    "creatorName": "Carol",
+    "handle": "@carol_alpha",
+    "content": "今天先空了一点 BTC，对冲一下周末 gap，risk first, profit later.",
+    "language": "zh-en-mix",
+    "createdAt": "2024-01-10T11:20:00.000Z",
+    "likes": 25,
+    "retweets": 9,
+    "replies": 3
+  },
+  {
+    "id": "t4",
+    "creatorId": "alice",
+    "creatorName": "Alice",
+    "handle": "@alice_cn",
+    "content": "如果这次 BTC 真能站稳 50k，我请自己放一天假 😂",
+    "language": "zh-en-mix",
+    "createdAt": "2024-01-10T12:00:00.000Z",
+    "likes": 55,
+    "retweets": 21,
+    "replies": 10
+  },
+  {
+    "id": "t5",
+    "creatorId": "bob",
+    "creatorName": "Bob",
+    "handle": "@bob_trader",
+    "content": "又一次证明，不要 FOMO，plan your trade, trade your plan.",
+    "language": "en-zh-mix",
+    "createdAt": "2024-01-10T12:45:00.000Z",
+    "likes": 19,
+    "retweets": 7,
+    "replies": 2
+  }
+]
