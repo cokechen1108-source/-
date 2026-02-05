@@ -1,38 +1,11 @@
 import { mockCreators, MockCreator } from '../mock/mockCreators';
-
-/* =========================
-   类型定义
-========================= */
-
-export interface ContentBreakdown {
-  originalityScore: number;
-  insightScore: number;
-  engagementQualityScore: number;
-  minaraAffinityScore: number;
-  totalContentScore: number;
-}
-
-export interface LeaderboardEntry {
-  id: string;
-  handle: string;
-  followers: number;
-  tweetsCount: number;
-  contentScore: number;
-  contentBreakdown: ContentBreakdown;
-  derivativeScore: number;
-  totalScore: number;
-}
-
-export interface LeaderboardResponse {
-  updatedAt: string;
-  entries: LeaderboardEntry[];
-}
+import type { ContentScoreBreakdown, CreatorScoreBreakdown, LeaderboardResponse } from '../../types/leaderboard';
 
 /* =========================
    Content Score 计算
 ========================= */
 
-function calculateContentScore(creator: MockCreator): ContentBreakdown {
+function calculateContentScore(creator: MockCreator): ContentScoreBreakdown {
   const tweets = creator.tweets;
   const total = tweets.length;
 
@@ -100,20 +73,22 @@ function calculateTotalScore(contentScore: number, derivativeScore: number): num
 ========================= */
 
 export function getLeaderboard(): LeaderboardResponse {
-  const entries: LeaderboardEntry[] = mockCreators.map(creator => {
+  const entries: CreatorScoreBreakdown[] = mockCreators.map(creator => {
     const contentBreakdown = calculateContentScore(creator);
     const derivativeScore = calculateDerivativeScore(creator);
     const totalScore = calculateTotalScore(contentBreakdown.totalContentScore, derivativeScore);
 
     return {
-      id: creator.id,
+      creatorId: creator.id,
+      creatorName: creator.handle,
       handle: creator.handle,
-      followers: creator.followers,
-      tweetsCount: creator.tweets.length,
       contentScore: contentBreakdown.totalContentScore,
       contentBreakdown,
       derivativeScore,
-      totalScore
+      totalScore,
+      tweetsCount: creator.tweets.length,
+      tradesCount: 0,
+      totalPnlUSD: 0
     };
   });
 
@@ -130,21 +105,23 @@ export function getLeaderboard(): LeaderboardResponse {
    Demo Helper
 ========================= */
 
-export function getDemoLeaderboard(): LeaderboardEntry[] {
-  const leaderboard = mockCreators.map(creator => {
+export function getDemoLeaderboard(): CreatorScoreBreakdown[] {
+  const leaderboard: CreatorScoreBreakdown[] = mockCreators.map(creator => {
     const contentBreakdown = calculateContentScore(creator);
     const derivativeScore = calculateDerivativeScore(creator);
     const totalScore = calculateTotalScore(contentBreakdown.totalContentScore, derivativeScore);
 
     return {
-      id: creator.id,
+      creatorId: creator.id,
+      creatorName: creator.handle,
       handle: creator.handle,
-      followers: creator.followers,
-      tweetsCount: creator.tweets.length,
       contentScore: contentBreakdown.totalContentScore,
       contentBreakdown,
       derivativeScore,
-      totalScore
+      totalScore,
+      tweetsCount: creator.tweets.length,
+      tradesCount: 0,
+      totalPnlUSD: 0
     };
   });
 
