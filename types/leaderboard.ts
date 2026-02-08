@@ -31,6 +31,10 @@ export interface ContentScoreBreakdown {
   engagementQualityScore: number;
   minaraAffinityScore: number;
   totalContentScore: number;
+  /** 反垃圾惩罚系数 (0, 1]，1 = 无惩罚 */
+  spamPenalty: number;
+  /** 有效推文数（去除垃圾推文后） */
+  effectiveTweetCount: number;
 }
 
 export interface CreatorScoreBreakdown {
