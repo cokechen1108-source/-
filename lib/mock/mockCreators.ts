@@ -3,13 +3,42 @@ export interface MockTweet {
   text: string;
   isRetweet: boolean;
   likes: number;
+  viewCount?: number;
   replies: number;
   retweets: number;
+  quoteCount?: number;
+  createdAt?: string;
+  mediaInsights?: {
+    hasMedia: boolean;
+    mediaCount: number;
+    imageCount: number;
+    videoCount: number;
+    altTextSummary: string;
+    ocrSummary: string;
+    mediaDepthBoost: number;
+    mediaInfluenceBoost: number;
+    mediaTags: string[];
+    pnlUSD?: number;
+    pnlBucket: 'none' | 'lt100' | '100_500' | '500_1000' | 'gte1000';
+    pnlEvidenceScore: number;
+    items: Array<{
+      mediaKey: string;
+      type: string;
+      url: string;
+      altText?: string;
+      ocrText?: string;
+      ocrConfidence?: number;
+      width?: number;
+      height?: number;
+      note?: string;
+    }>;
+  };
 }
 
 export interface MockCreator {
   id: string;
   handle: string;
+  profileImageUrl?: string;
   followers: number;
   tweets: MockTweet[];
 }

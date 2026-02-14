@@ -53,6 +53,14 @@ export function computeContentScoreForCreator(
       minaraAffinityScore: 0,
       totalContentScore: 0,
       spamPenalty: 1,
+      credibility: 1,
+      finalMultiplier: 1,
+      nonRetweetCoverage: 0,
+      sampleFactor: 0,
+      timeDecayAvg: 1,
+      engagementCredibilityAvg: 1,
+      pnlEvidenceScore: 0,
+      pnlEvidenceCoverage: 0,
       effectiveTweetCount: 0
     };
   }
@@ -84,6 +92,14 @@ export function computeContentScoreForCreator(
       minaraAffinityScore: 0,
       totalContentScore: 0,
       spamPenalty: 0,
+      credibility: 1,
+      finalMultiplier: 0,
+      nonRetweetCoverage: 0,
+      sampleFactor: 0,
+      timeDecayAvg: 1,
+      engagementCredibilityAvg: 1,
+      pnlEvidenceScore: 0,
+      pnlEvidenceCoverage: 0,
       effectiveTweetCount: 0
     };
   }
@@ -238,7 +254,15 @@ export function computeContentScoreForCreator(
     engagementQualityScore: Number(engagementQualityScore.toFixed(2)),
     minaraAffinityScore: Number(minaraAffinityScore.toFixed(2)),
     totalContentScore: Number(totalContentScore.toFixed(2)),
-    spamPenalty: Number((spamPenalty * burstPenalty).toFixed(4)),
+    spamPenalty: Number(spamPenalty.toFixed(4)),
+    credibility: Number(burstPenalty.toFixed(4)),
+    finalMultiplier: Number((spamPenalty * burstPenalty).toFixed(4)),
+    nonRetweetCoverage: Number((effectiveTweetCount / tweets.length).toFixed(4)),
+    sampleFactor: Number(Math.min(1, effectiveTweetCount / 5).toFixed(4)),
+    timeDecayAvg: 1,
+    engagementCredibilityAvg: 1,
+    pnlEvidenceScore: 0,
+    pnlEvidenceCoverage: 0,
     effectiveTweetCount
   };
 }
