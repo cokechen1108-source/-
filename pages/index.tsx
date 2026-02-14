@@ -2,7 +2,6 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { FormEvent, Fragment, useEffect, useMemo, useState } from 'react';
 
-import { getLeaderboard } from '../lib/score/creatorScore';
 import { CreatorScoreBreakdown, LeaderboardResponse } from '../types/leaderboard';
 
 interface Props {
@@ -85,11 +84,54 @@ interface ShareTarget {
   rank: number;
 }
 
+const BUILTIN_TWEET_LINKS: string[] = [
+  'https://x.com/kai441959/status/2021631133868560605',
+  'https://x.com/seven_1_eight/status/2021548310600016245?s=46&t=yA6SyrXHHsNB8lAUbwdNZA',
+  'https://x.com/ossy_gg/status/2021750418238505401',
+  'https://x.com/jkkingnguyen/status/2021754148778283506?s=46&t=xRxsEQ92Vd7yTMtzKGYngw',
+  'https://x.com/iluminatitan/status/2021760163980439878?s=20',
+  'https://x.com/duonggiammo/status/2021792951610024116',
+  'https://x.com/AwanHanLynx/status/2021772149887836500',
+  'https://x.com/mdkitchen7/status/2021795796040179738',
+  'https://x.com/vinC_0x0/status/2021799652698542571',
+  'https://x.com/Leonis237/status/2021802674170343614?s=20',
+  'https://x.com/bebac2207/status/2021812176911249635',
+  'https://x.com/haipeoneo/status/2021807214575620483?s=20',
+  'https://x.com/igen0xgo/status/2021828952608948382?s=46&t=v8pNjGLk5a0I5usL1yhM_w',
+  'https://x.com/aegis_llee92/status/2021844803529716216?s=20',
+  'https://x.com/RizzDroop23/status/2021845052042211672?s=20',
+  'https://x.com/i/status/2021855380247286088',
+  'https://x.com/Flame_ZVl/status/2021880977996628331?s=20',
+  'https://x.com/cuti_info/status/2021891411520762092?s=20',
+  'https://x.com/boddaricoin/status/2021906722034790545?s=20',
+  'https://x.com/gee_euun/status/2021914036024291748?s=20',
+  'https://x.com/tdd310324/status/2021914771524923818?s=20',
+  'https://x.com/bjysla2016/status/2021933906304663613?s=20',
+  'https://x.com/rizzdroop23/status/2021952445132464370?s=46&t=gkVQBAI9GO9seEwjATEbWg',
+  'https://x.com/trong_ga29814/status/2021952488283529660?s=20',
+  'https://x.com/luffynikkka/status/2021959782060699778?s=46&t=gkVQBAI9GO9seEwjATEbWg',
+  'https://x.com/PhuTran1990/status/2021974565329735835',
+  'https://x.com/deday_1/status/2021974741133951023',
+  'https://x.com/kai441959/status/2021978919201911146',
+  'https://x.com/KysooG/status/2021982187915268562',
+  'https://x.com/Rohitcryptoreal/status/2021984238699262329?s=20',
+  'https://x.com/jkkingnguyen/status/2021987920983490914?s=46&t=xRxsEQ92Vd7yTMtzKGYngw',
+  'https://x.com/crypt0beast/status/2021998644560638100',
+  'https://x.com/bliss_rh/status/2022009360407572768',
+  'https://x.com/bubonik_X/status/2022020390030311669',
+  'https://x.com/Layfon_olhyde/status/2022029956965183826',
+  'https://x.com/bon4th/status/2022037013277597856',
+  'https://x.com/CryptKatsu/status/2022049716889108648',
+  'https://x.com/heyjae41/status/2021963763864523053?s=20'
+];
+
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const leaderboard = getLeaderboard();
   return {
     props: {
-      leaderboard
+      leaderboard: {
+        updatedAt: new Date().toISOString(),
+        entries: []
+      }
     }
   };
 };
@@ -97,7 +139,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 export default function Home({ leaderboard }: Props) {
   const [currentLeaderboard, setCurrentLeaderboard] = useState<LeaderboardResponse>(leaderboard);
   const [tweetLinksInput, setTweetLinksInput] = useState('');
-  const [savedTweetLinks, setSavedTweetLinks] = useState<string[]>([]);
+  const [savedTweetLinks, setSavedTweetLinks] = useState<string[]>(
+    Array.from(new Set(BUILTIN_TWEET_LINKS))
+  );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analyzeError, setAnalyzeError] = useState('');
   const [analysisMeta, setAnalysisMeta] = useState<AnalyzeMeta | null>(null);
@@ -123,13 +167,7 @@ export default function Home({ leaderboard }: Props) {
     setAnalyzeError('');
   };
 
-  const handleAnalyzeWithRealTweets = async () => {
-    const allLinks = Array.from(new Set([...savedTweetLinks, ...parsedLinks.valid]));
-    if (allLinks.length === 0) {
-      setAnalyzeError('请先输入至少一条有效推文链接。');
-      return;
-    }
-
+  const analyzeWithLinks = async (allLinks: string[]) => {
     setIsAnalyzing(true);
     setAnalyzeError('');
 
@@ -171,6 +209,20 @@ export default function Home({ leaderboard }: Props) {
       setIsAnalyzing(false);
     }
   };
+
+  const handleAnalyzeWithRealTweets = async () => {
+    const allLinks = Array.from(new Set([...savedTweetLinks, ...parsedLinks.valid]));
+    if (allLinks.length === 0) {
+      setAnalyzeError('请先输入至少一条有效推文链接。');
+      return;
+    }
+    await analyzeWithLinks(allLinks);
+  };
+
+  useEffect(() => {
+    if (BUILTIN_TWEET_LINKS.length === 0) return;
+    void analyzeWithLinks(Array.from(new Set(BUILTIN_TWEET_LINKS)));
+  }, []);
 
   useEffect(() => {
     if (!shareTarget) {
